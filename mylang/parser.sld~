@@ -1,0 +1,10 @@
+(define-library (mylang parser)
+  (export parse-one-token
+	  sorting-types
+	  parse-paren
+	  tokens->sentences)
+  (import (scheme base)
+	  (mylang types)
+	  (mylang tokens))
+  (include "parser.scm"))
+
