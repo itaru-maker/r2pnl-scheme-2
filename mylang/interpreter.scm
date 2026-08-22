@@ -50,11 +50,15 @@
   (let ((body (reverse (all-but-last sentence))));逆向きにする（速いから）
     (for-each
      (lambda (pair)
-       (let ((item (car pair)) (item-line (cdr pair)))
+       (let ((item (car pair)) (item-line (cdr pair)));ここで分離
 	 (interp-token-line-set! interp item-line)
 	 (cond
 	  ((symbol-value? item);安全確認がまだできてないので注意
 	   (stack-push! interp (env-get (interp-env interp) (symbol-value-token item))))
+
+	  ((lazy-value? item)
+	   (stack-push! interp (parse-one-token (lazy-value-token item))))
+	   
 
 	  ((period? item)
 	   (invoke! interp (stack-pop! interp)))

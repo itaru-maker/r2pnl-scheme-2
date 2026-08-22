@@ -18,9 +18,9 @@
      ;;lazy
      ((char=? (string-ref item 0) #\')
       (make-lazy-value (substring item 1 token-len)))
-     ;;label
-     ((char=? (string-ref item 0) #\:)
-      (make-lazy-value (substring item 1 token-len)))
+     ;;label(廃止予定）
+     ;;((char=? (string-ref item 0) #\:)
+     ;; (make-lazy-value (substring item 1 token-len)))
 
      ((string=? item ".") the-period)
      ((string=? item ";") the-semicolon)

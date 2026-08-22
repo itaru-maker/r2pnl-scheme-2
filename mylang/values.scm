@@ -6,7 +6,7 @@
 
 (define the-nil (make-nil-value)) ; nil唯一のインスタンス
 
-(define-record-type <label-value>
+(define-record-type <label-value>;廃止するかも
   (make-label-value token)
   label-value?
   (token label-value-token)) ; tokenはlabel-value-tokenで取得する
@@ -54,8 +54,8 @@
 	((lazy-value? value) (string-append "'" (lazy-value-token value)))
 	((block-value? value)
 	 (string-append "( "
-			(apply string-append (map (lambda (x) (string-append (value->write-string x) " ")) (block-value-items value)))
+			(apply string-append (map (lambda (pair) (string-append (value->write-string (car pair)) " ")) (block-value-items value)))
 			
-	      " )"))
+	      ")"))
 	((lambda-value? value) (string-append "<lambda" (if (lambda-value-line value) (string-append "at" (lambda-value-line value))) ">"))
 	(else (write "unknown-type") (write  value))))
