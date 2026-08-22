@@ -27,9 +27,6 @@
   (items block-value-items block-value-items-set!))
 
 (define (block-value-append! block item)
-  (block-value-items-set! block (cons item (block-value-items block))))
-
-(define (block-value-append! block item)
   (block-value-items-set! block
     (cons item (block-value-items block))))
 
@@ -58,4 +55,10 @@
 			
 	      ")"))
 	((lambda-value? value) (string-append "<lambda" (if (lambda-value-line value) (string-append "at" (lambda-value-line value))) ">"))
-	(else (write "unknown-type") (write  value))))
+	;;tokens
+	((period? value) "<period>")
+	((semicolon? value) "<semicolon>")
+	((r-paren? value) "<r-paren>")
+	((l-paren? value) "<l-paren>")
+	
+  	(else (write "debug:unknown-type") (write  value))))

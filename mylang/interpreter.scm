@@ -53,8 +53,10 @@
        (let ((item (car pair)) (item-line (cdr pair)));ここで分離
 	 (interp-token-line-set! interp item-line)
 	 (cond
-	  ((symbol-value? item);安全確認がまだできてないので注意
-	   (stack-push! interp (env-get (interp-env interp) (symbol-value-token item))))
+	  ((symbol-value? item)
+	   (if (in-env? (interp-env interp) (symbol-value-token item));安全確認
+	       (stack-push! interp (env-get (interp-env interp) (symbol-value-token item)))
+	       (interp-error! interp "NameError" (string-append "unknown-name:" (symbol-value-token item)))))
 
 	  ((lazy-value? item)
 	   (stack-push! interp (parse-one-token (lazy-value-token item))))
@@ -68,11 +70,11 @@
      body)))
 
 (define (interp-run interp code)
-  (guard (e
+  (guard (e;エラーをキャッチ
 	  ((interp-error? e)
 	   (for-each (lambda (x) (display x))
 		     (reverse (interp-error-trace e)))
-	   (display (string-append (interp-error-name e) ":" (interp-error-message e) " at line " (number->string (interp-error-line e))))))
+	   (display (string-append "\n" (interp-error-name e) ":" (interp-error-message e) " at line " (number->string (interp-error-line e))))))
     (let*
 	((raw-tokens (lexar code))
 	 (types (sorting-types raw-tokens))

@@ -1,4 +1,4 @@
-(entry-builtin-names! (list "display")
+(entry-builtin-names! (list "write")
   (lambda (interp)
     (display
      (value->write-string

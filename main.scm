@@ -1,4 +1,4 @@
-;(set! %load-extensions (cons ".sld" %load-extensions));guile用に書くべきだそう（gauche派ですが、)
+;(set! %load-extensions (cons ".sld" %load-extensions));guileの人は書く
 
 (import (scheme base)
 	(scheme write)
@@ -19,9 +19,11 @@
 
 
 (interp-run mylang "
-. let 'kani display 1010 ;
-. kani 123098120398120398 ;
-. display ;
+. write \"ミクーッ！！ミクーッ！！ヒャー！！おわっほあああああああああああああああああああああああああああああああああ！！\"  ;
+. write '; ;
+. write 123 ; ;
+. let 'hello! \"hello world\" ;
+. write hello! ;
 ")
 	
 
