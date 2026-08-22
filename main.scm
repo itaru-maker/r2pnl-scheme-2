@@ -14,5 +14,8 @@
 
 (define mylang (make-interp));インスタンス化
 
-(interp-run mylang ". add 'kani ;")
+
+
+
+(interp-run mylang ". display . add 3 \"hello\" ;")
 	

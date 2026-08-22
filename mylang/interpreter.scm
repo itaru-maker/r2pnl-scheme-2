@@ -39,7 +39,7 @@
   (cond
    ((builtin-func? call-func) ((builtin-func-proc call-func) interp))
    ((lambda-value? call-func) (call-lambda! call-func interp))
-   (else (inter-error! interp "TypeError" "not callable value is passd"))))
+   (else (interp-error! interp "TypeError" "not callable value is passd"))))
 
 (define (all-but-last lst);セミコロンを取り除くよう
   (if (null? lst)
@@ -72,7 +72,7 @@
 	  ((interp-error? e)
 	   (for-each (lambda (x) (display x))
 		     (reverse (interp-error-trace e)))
-	   (display (string-append (interp-error-name e) (interp-error-message e)))))
+	   (display (string-append (interp-error-name e) ":" (interp-error-message e) " at line " (number->string (interp-error-line e))))))
     (let*
 	((raw-tokens (lexar code))
 	 (types (sorting-types raw-tokens))
