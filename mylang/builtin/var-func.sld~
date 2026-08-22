@@ -1,7 +1,0 @@
-(define-library (mylang builtin var-func)
-  (export)
-  (import (scheme base)
-	  (mylang interpreter)
-	  (mylang bultin database)
-	  (mylang env))
-  (include "var-func.scm"))
