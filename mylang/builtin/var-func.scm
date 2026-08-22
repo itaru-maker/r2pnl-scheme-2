@@ -15,5 +15,5 @@
       (if (symbol-value? name)
 	  (if (in-env? (interp-env interp) (symbol-value-token name))
 	      (env-set! (interp-env interp) (symbol-value-token name) value)
-	      (interp-error! interp "VarError" "synbol is not defined. please use func \"let\""))
+	      (interp-error! interp "VarError" "symbol is not defined. please use func \"let\""))
 	  (interp-error! interp "TypeError" (string-append "func \"set\" expect symbol-value and any-value, but value " (value->write-string name) " is passed as symbol"))))))
