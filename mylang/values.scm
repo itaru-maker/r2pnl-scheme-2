@@ -49,7 +49,7 @@
 	((string? value) (string-append "\"" value "\""))
 	((boolean? value) (if value "#true" "#false"))
 	((nil-value? value) "#nil")
-	((label-value? value) (string-append ":" (label-value-token value)))
+	;((label-value? value) (string-append ":" (label-value-token value)))
 	((symbol-value? value) (symbol-value-token value))
 	((lazy-value? value) (string-append "'" (lazy-value-token value)))
 	((block-value? value)
