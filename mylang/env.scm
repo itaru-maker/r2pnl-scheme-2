@@ -8,7 +8,7 @@
   (make-env-raw '() parent))
 
 (define (in-env? env name)
-  (cond (assoc name (env-vars env) #t) ;そのまま自分が持ってるなら#tを返す
+  (cond ((assoc name (env-vars env)) #t) ;そのまま自分が持ってるなら#tを返す
 	((env-parent env) (in-env? (env-parent env) name));親がいるなら、親に探してもらう
 	(else #f))) ;なかった!
 

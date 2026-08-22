@@ -19,7 +19,9 @@
 
 
 (interp-run mylang "
-. let 'kani 3 ;
-. display kani ;
+. let 'kani display 1010 ;
+. kani 123098120398120398 ;
+. display ;
 ")
 	
+

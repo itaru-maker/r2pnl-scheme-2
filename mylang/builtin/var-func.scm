@@ -5,8 +5,6 @@
       (if (symbol-value? name)
 	  (if (in-env? (interp-env interp) (symbol-value-token name))
 	      (interp-error! interp "TypeError" "symbol is already defined! please use func \"set\"")
-	      (begin
-		(env-define (interp-env interp) (symbol-value-token name) value)
-		(write "定義されました（デバッグ）")))
+              (env-define (interp-env interp) (symbol-value-token name) value))
 	  (interp-error! interp "TypeError" (string-append "func \"let\" expect symbol-value and any-value, but value " (value->write-string name) " is passed as symbol"))))))
 
