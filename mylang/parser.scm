@@ -60,7 +60,7 @@
 	    (block-value-append! (car rest-stack) (cons new-block line))
 	    (loop (cdr rest) rest-stack))))
      (else
-      (block-value-append! (car stack) (car (car rest)))
+      (block-value-append! (car stack) (car rest))
       (loop (cdr rest) stack)))))
 
 (define (tokens->sentences types)

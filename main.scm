@@ -14,5 +14,5 @@
 
 (define mylang (make-interp));インスタンス化
 
-(interp-run mylang "( \"banananananana\" ) ;")
+(interp-run mylang ". display ( \"banananananana\" ) ;")
 	

@@ -1,5 +1,0 @@
-(entry-builtin-names! ("display")
-  (lambda (interp)
-    (display (stack-pop! interp))))
-		     
-		    

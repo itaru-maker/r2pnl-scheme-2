@@ -1,6 +1,0 @@
-(define-library (mylang io-func)
-  (export)
-  (import (scheme base)
-	  (mylang interpreter)
-	  (mylang builtin database))
-  (include "io-func.scm"))
