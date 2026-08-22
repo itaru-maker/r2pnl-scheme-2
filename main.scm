@@ -20,6 +20,6 @@
 
 (interp-run mylang "
 . let 'alalalalal 3 ;
-. display kani ;
+. display alalalalal ;
 ")
 	
