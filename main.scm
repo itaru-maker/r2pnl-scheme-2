@@ -17,13 +17,10 @@
 
 
 
-
 (interp-run mylang "
 . write \"ミクーッ！！ミクーッ！！ヒャー！！おわっほあああああああああああああああああああああああああああああああああ！！\"  ;
-. let 'hello \"hello world\" ;
-. set 'hello \"goodbye world\" ;
-. write hello ;
-. 123 
+. write write ;
+
 ")
 
 
