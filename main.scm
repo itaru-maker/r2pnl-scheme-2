@@ -20,10 +20,10 @@
 
 (interp-run mylang "
 . write \"ミクーッ！！ミクーッ！！ヒャー！！おわっほあああああああああああああああああああああああああああああああああ！！\"  ;
-. set 'hello 'kani ;
 . let 'hello \"hello world\" ;
 . set 'hello \"goodbye world\" ;
 . write hello ;
+. 123 
 ")
-	
+
 

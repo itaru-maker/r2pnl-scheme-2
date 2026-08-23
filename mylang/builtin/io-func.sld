@@ -5,4 +5,9 @@
 	  (mylang values)
 	  (mylang interpreter)
 	  (mylang builtin database))
-  (include "io-func.scm"))
+  (begin
+    (entry-builtin-names! (list "write")
+      (lambda (interp)
+	(display
+	 (value->write-string
+	  (stack-pop! interp)))))))
