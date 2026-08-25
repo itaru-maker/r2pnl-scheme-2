@@ -17,8 +17,8 @@
    (mylang env)
    (mylang lexar)
    (mylang parser)
-   (mylang error)
-   (mylang builtin database))
+   (mylang error))
+  
   (begin
     (define-record-type <interp>
       (make-interp-raw stack env token-line) ;__init__みたいなの
@@ -88,11 +88,11 @@
 	     (sentences (tokens->sentences structure-types)))
 	  (for-each (lambda (one-sentence) (execute-sentence interp one-sentence)) sentences))))
 
-    (define (make-interp);決まりきった引数を削り取ったやつ
+    (define (make-interp builtins);決まりきった引数を削り取ったやつ
       (let* ((env (make-env #f))
 	     (interp (make-interp-raw '() env #f)));初期化用の、空スタック、親がいないenv(外側)、lineは#f を作る。
 	(for-each
 	 (lambda (entry);(name . proc)のリストをもらう
 	   (env-define env (car entry) (make-builtin-func (car entry) (cdr entry))))
-	 *builtin*)
+	 builtins)
 	interp))));for-eachは返さないから、interpを返す。

@@ -1,13 +1,14 @@
 (define-library (mylang builtin io-func)
-  (export)
+  (export io-func-dict)
   (import (scheme base)
 	  (scheme write)
 	  (mylang values)
-	  (mylang interpreter)
-	  (mylang builtin database))
+	  (mylang interpreter))
   (begin
-    (entry-builtin-names! (list "write")
-      (lambda (interp)
+      (define  (write-func interp)
 	(display
 	 (value->write-string
-	  (stack-pop! interp)))))))
+	  (stack-pop! interp))))
+
+      (define io-func-dict
+	`(("write" . ,write-func)))))

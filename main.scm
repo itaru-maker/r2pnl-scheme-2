@@ -3,9 +3,14 @@
 gauche
 gosh -r7 -I. main.scm
 chibi
-chibi-scheme main.scm
+axfchibi-scheme main.scm
 kawa
 kawa -Dkawa.import.path="./*.sld" --r7rs main.scm
+sash
+sash -r7 -L . main.scm
+guile
+guile --r7rs -L . main.scm
+==================
 |#
 
 (import (scheme base)
@@ -16,23 +21,21 @@ kawa -Dkawa.import.path="./*.sld" --r7rs main.scm
 	(mylang lexar)
 	(mylang parser)
 	(mylang error)
-	(mylang builtin database)
 	(mylang interpreter)
-	(mylang builtin math-func)
-	(mylang builtin io-func)
-	(mylang builtin var-func))
+	(mylang builtin prelude))
 
-(define mylang (make-interp));インスタンス化
-
-
+(define mylang (make-interp all-builtins));インスタンス化
 
 
 (interp-run mylang "
+. add 3 4 ;
 . write \"ミクーッ！！ミクーッ！！ヒャー！！おわっほあああああああああああああああああああああああああああああああああ！！\"  ;
+. write ;
 . write write ;
-. write \" ;
+
 
 ")
 
+(newline)
 
 
