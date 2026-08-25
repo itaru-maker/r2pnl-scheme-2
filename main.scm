@@ -3,7 +3,7 @@
 gauche
 gosh -r7 -I. main.scm
 chibi
-axfchibi-scheme main.scm
+chibi-scheme main.scm
 kawa
 kawa -Dkawa.import.path="./*.sld" --r7rs main.scm
 sash
