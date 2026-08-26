@@ -1,15 +1,19 @@
 ;;(set! %load-extensions (cons ".sld" %load-extensions));guileの人は書く
-#|===実行方法===
+#|実行方法：お使いの処理系に応じて使い分けてください！
 gauche
-gosh -r7 -I. main.scm
+ gosh -r7 -I. main.scm
 chibi
-chibi-scheme main.scm
+ chibi-scheme main.scm
 kawa
-kawa -Dkawa.import.path="./*.sld" --r7rs main.scm
+ kawa -Dkawa.import.path="./*.sld" --r7rs main.scm
 sash
-sash -r7 -L . main.scm
+ sash -r7 -L . main.scm
 guile
-guile --r7rs -L . main.scm
+ guile --r7rs -L . main.scm
+chicken
+ むりだった！
+cyclone
+ むりだった！
 ==================
 |#
 
@@ -29,11 +33,13 @@ guile --r7rs -L . main.scm
 
 (interp-run mylang "
 . add 3 4 ;
-. write \"ミクーッ！！ミクーッ！！ヒャー！！おわっほあああああああああああああああああああああああああああああああああ！！\"  ;
 . write ;
 . write write ;
-
-
+. let 'ka \"\" ;
+. write ka ;
+. write ( fizz buzz fizzbuzz ) ;
+. write
+  . / 3 5 ;
 ")
 
 (newline)

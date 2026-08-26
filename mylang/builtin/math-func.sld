@@ -39,5 +39,5 @@
       ("+" . ,add-func)
       ("-" . ,sub-func)
       ("*" . ,mul-func)
-      ("/" . ,sub-func)))))
+      ("/" . ,div-func)))))
   

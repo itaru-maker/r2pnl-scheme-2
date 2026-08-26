@@ -66,7 +66,7 @@
 		   (interp-error! interp "NameError" (string-append "unknown-name:" (symbol-value-token item)))))
 
 	      ((lazy-value? item)
-	       (stack-push! interp (parse-one-token (lazy-value-token item))))
+	       (stack-push! interp (parse-one-token (lazy-value-token item) item-line)))
 	      
 	      ((period? item)
 	       (invoke! interp (stack-pop! interp)))
