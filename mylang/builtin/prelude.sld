@@ -4,11 +4,13 @@
 	  (scheme write)
 	  (mylang builtin math-func)
 	  (mylang builtin io-func)
-	  (mylang builtin var-func))
+	  (mylang builtin var-func)
+	  (mylang builtin stack-func))
 
   (begin
     (define all-builtins
       (append
        math-func-dict
        io-func-dict
-       var-func-dict))))
+       var-func-dict
+       stack-func-dict))))

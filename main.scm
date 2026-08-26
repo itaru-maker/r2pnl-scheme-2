@@ -32,14 +32,10 @@ cyclone
 
 
 (interp-run mylang "
-. add 3 4 ;
-. write ;
-. write write ;
-. let 'ka \"\" ;
-. write ka ;
-. write ( fizz buzz fizzbuzz ) ;
-. write
-  . / 3 5 ;
+. write . add . dup 3 ;
+. write . sub . swap 5 10 ;
+. write . drop \"ゴミデータ\" \"ゴミじゃないデータ\" ;
+. write \"parfect!\" ;
 ")
 
 (newline)
