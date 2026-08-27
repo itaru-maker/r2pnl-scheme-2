@@ -38,28 +38,25 @@ cyclone
 
 
 (interp-run mylang "
-. let 'not
-    . func ( x ) (
-        . write x ;
-        . if x
+:let 'not
+    :func (x) (
+        :write x;
+        :if x
             #false
             #true
         ;
     )
 ;
 
-. write . not #false ;
-. write . not #true ;
-. write \"\" ;
+:write :not #false;
+:write :not #true;
+:write \"\";
 
 
-. write . if . not #false
-            'true!
-            'false!
-;
+:write :if :not #false 'true! 'false!;
 
 
-");何かがおかしい
+")
 
 (newline)
 

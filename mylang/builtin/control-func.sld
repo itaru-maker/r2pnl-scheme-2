@@ -29,7 +29,7 @@
           ((condition (stack-pop! interp))
            (true-then (stack-pop! interp))
            (false-then (stack-pop! interp)))
-      (if (and
+      (if (or
            (eq? #f condition)
            (nil-value? condition))
           (stack-push! interp false-then)

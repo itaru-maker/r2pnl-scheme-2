@@ -36,7 +36,8 @@
 	  (make-lazy-value (substring item 1 token-len)))
 
 	 ;;tokenなど
-	 ((string=? item ".") the-period)
+	 ;;((string=? item ".") the-period)
+         ((string=? item ":") the-period);一回これにしようかな
 	 ((string=? item ";") the-semicolon)
 	 ((string=? item "(") the-l-paren)
 	 ((string=? item ")") the-r-paren)

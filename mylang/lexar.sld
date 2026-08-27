@@ -2,6 +2,12 @@
   (export lexar)
   (import (scheme base))
   (begin
+    (define (delimiter? chr)
+      (or (char=? chr #\()
+          (char=? chr #\))
+          (char=? chr #\;)
+          (char=? chr #\:)))
+    
     ;; plain-codeを受け取り、((token . line) (token . line)) の形で返す
     (define (lexar plain-code)
       (let ((code-len (string-length plain-code)))
@@ -15,6 +21,9 @@
 	    (if (null? chars)
 		tokens
 		(cons (cons (list->string (reverse chars)) line) tokens)))
+
+          (define (flash-delim chr tokens line)
+            (cons (cons (string chr) line) tokens))
       
 	  (if (= i code-len) ;終了だったら、
 	      (reverse (flash-chars chars tokens line))
@@ -47,6 +56,13 @@
 			in-str?
 			line
 			(flash-chars chars tokens line)))
+
+                 ((delimiter? chr);一つで区切り文字として動くやつだったら、
+                  (loop (+ i 1)
+                        '()
+                        in-str?
+                        line
+                        (flash-delim chr (flash-chars chars tokens line) line)))
 
 		 (else
 		  (loop (+ i 1)
