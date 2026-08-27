@@ -9,8 +9,8 @@
 	  (mylang tokens)
 	  (mylang error))
   (begin
-    ;;一つのtokenを受け取って、変換して返す
     (define (parse-one-token item line)
+      ;;一つのtokenを受け取って、変換して返す
       (let ((token-len (string-length item))
 	    (item-line line));parse-error用
 	(cond
@@ -46,6 +46,7 @@
 
 
     (define (sorting-types str-tokens)
+      ;;parse-one-token　を全てのtokenについて行う
       (map (lambda (pair)
 	     (cons (parse-one-token (car pair) (cdr pair));もうちょっと簡潔にかける気が
 		   (cdr pair)))
@@ -53,6 +54,7 @@
 
 
     (define (parse-paren types)
+      ;;blockを構造化
       (let loop ((rest types)
 		 (stack (list (make-block-value '())))) ;外側の受け皿 (逆向き)appendを使い回すため
 	(cond
@@ -80,6 +82,7 @@
 
 
     (define (tokens->sentences types)
+      ;;tokenを、
       (let loop ((rest types)
 		 (current '());現在の処理している文（逆側に積む）
 		 (stack '()));最終的に返す文たち(逆側に積む）

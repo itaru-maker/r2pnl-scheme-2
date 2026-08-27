@@ -5,15 +5,15 @@ gauche
 chibi
  chibi-scheme main.scm
 kawa
- kawa -Dkawa.import.path="./*.sld" --r7rs main.scm
+kawa -Dkawa.import.path="./*.sld" --r7rs main.scm
 sash
- sash -r7 -L . main.scm
+sash -r7 -L . main.scm
 guile
- guile --r7rs -L . main.scm
+guile --r7rs -L . main.scm
 chicken
- むりだった！
+ むりだった！(r7rs-eggがsldファイルに非対応のため)
 cyclone
- むりだった！
+ むりだった！(apple silicon macとの相性が悪かった)
 ==================
 |#
 
@@ -36,6 +36,16 @@ cyclone
 . write . sub . swap 5 10 ;
 . write . drop \"ゴミデータ\" \"ゴミじゃないデータ\" ;
 . write \"parfect!\" ;
+. exec ( . write \"hello\" ; ) ;
+
+. let 'hello (
+  . let 'この変数名は使わないで ;
+  . write \"hello, \" ;
+  . write この変数名は使わないで ;
+  . write \"!\" ;
+) ;
+
+. exec hello \"world\" ;
 ")
 
 (newline)
