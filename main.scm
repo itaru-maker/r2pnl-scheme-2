@@ -32,13 +32,23 @@ cyclone
 
 
 (interp-run mylang "
-. let 'hello!
-  . func ( x ) (
-    . write \"hello!\" ;
-    . write x ;
-  )
+. let 'comment-> drop ;
+
+. let 'when
+    . func ( cond true ) (
+        . exec . if cond
+            ( true ; )
+            ( . drop #nil ; )
+        ;
+    )
 ;
-. hello! \"pochi\" ;
+
+. write 
+    . when #true 39 
+    . comment-> 'まあスタック指向だからあんまり使えるものじゃないけど
+;
+
+
 ")
 
 (newline)

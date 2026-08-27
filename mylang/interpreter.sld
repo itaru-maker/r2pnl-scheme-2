@@ -53,19 +53,28 @@
            (let ((param (car pair)))
              (if (symbol-value? param)
                  (env-define lambda-env (symbol-value-token param) (stack-pop! interp))
-                 (interp-error! "TypeError" "'params' in 'func' must be a Block of Symbols"))))
-         (reverse (block-value-items (lambda-value-params lmb))))
+                 (interp-error! interp "TypeError" "'params' in 'func' must be a Block of Symbols"))))
+         (block-value-items (lambda-value-params lmb)))
+        (guard (e
+                ((mylang-error? e)
+                 (mylang-error-trace-set!
+                  e
+                  (cons (string-append "at line" (number->string caller-line) "\n")
+                        (mylang-error-trace e)))
+                 (interp-env-set! interp caller-env)
+                 (interp-token-line-set! interp caller-line)
+                 (raise e)));終わったら、そのまま上に流す
 
-        ;;切り替え！
-        (interp-env-set! interp lambda-env)
-        (interp-token-line-set! interp (lambda-value-line lmb))
+          ;;切り替え！
+          (interp-env-set! interp lambda-env)
+          (interp-token-line-set! interp (lambda-value-line lmb))
 
-        (let ((sentences (tokens->sentences (block-value-items (lambda-value-body lmb)))))
-          (for-each (lambda (one-sentence) (execute-sentence interp one-sentence))
-                    sentences))
+          (let ((sentences (tokens->sentences (block-value-items (lambda-value-body lmb)))))
+            (for-each (lambda (one-sentence) (execute-sentence interp one-sentence))
+                      sentences))
 
-        (interp-env-set! interp caller-env);戻す
-        (interp-token-line-set! interp caller-line)))
+          (interp-env-set! interp caller-env);戻す
+          (interp-token-line-set! interp caller-line))))
 
 
     (define (invoke! interp call-func)
@@ -104,9 +113,12 @@
     (define (interp-run interp code)
       (guard (e;エラーをキャッチ
 	      ((mylang-error? e)
+               (newline)
+               (display "==ERROR==")
+               (newline)
 	       (for-each (lambda (x) (display x))
 			 (reverse (mylang-error-trace e)))
-	       (display (string-append "\n" (mylang-error-name e) ":" (mylang-error-message e) " at line " (number->string (mylang-error-line e))))))
+	       (display (string-append (mylang-error-name e) ":" (mylang-error-message e) " at line " (number->string (mylang-error-line e))))))
 	(let*
 	    ((raw-tokens (lexar code))
 	     (types (sorting-types raw-tokens))
