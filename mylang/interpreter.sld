@@ -5,6 +5,7 @@
    stack-push! stack-pop!
    
    interp-error!
+   call-lambda!
    invoke!
 
    execute-sentence
@@ -40,6 +41,31 @@
     (define (interp-error! interp error-name message . opt-line);基本builtinはこいつを投げる
       (let ((error-line (if (not (null? opt-line)) (car opt-line) (interp-token-line interp))))
 	(raise (make-mylang-error error-name message error-line '())))) ;一番最初に起動した時だから、traceは空
+
+    (define (call-lambda! interp lmb)
+      (let*
+          ((lambda-env (make-env(lambda-value-env lmb)));lambdaの中のenv
+           (caller-line (interp-token-line interp))
+           (caller-env (interp-env interp)));interpが元々持っていたenv
+        ;;paramsを定義
+        (for-each 
+         (lambda (pair)
+           (let ((param (car pair)))
+             (if (symbol-value? param)
+                 (env-define lambda-env (symbol-value-token param) (stack-pop! interp))
+                 (interp-error! "TypeError" "'params' in 'func' must be a Block of Symbols"))))
+         (reverse (block-value-items (lambda-value-params lmb))))
+
+        ;;切り替え！
+        (interp-env-set! interp lambda-env)
+        (interp-token-line-set! interp (lambda-value-line lmb))
+
+        (let ((sentences (tokens->sentences (block-value-items (lambda-value-body lmb)))))
+          (for-each (lambda (one-sentence) (execute-sentence interp one-sentence))
+                    sentences))
+
+        (interp-env-set! interp caller-env);戻す
+        (interp-token-line-set! interp caller-line)))
 
 
     (define (invoke! interp call-func)

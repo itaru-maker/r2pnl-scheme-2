@@ -7,7 +7,7 @@
    make-block-value block-value? block-value-items block-value-items-set!
    block-value-append!
    make-builtin-func builtin-func? builtin-func-name builtin-func-proc
-   make-lambda-value lambda-value? lambda-value-params lambda-value-body lambda-value-env lambda-value-line call-lambda!
+   make-lambda-value lambda-value? lambda-value-params lambda-value-body lambda-value-env lambda-value-line 
    value->write-string)
   (import (scheme base)
 	  (scheme write)
@@ -59,9 +59,6 @@
       (body lambda-value-body)
       (env lambda-value-env)
       (line lambda-value-line))
-
-    (define (call-lambda! interp lambda)
-      (write "まだ未実装"))
 
     (define (value->write-string value)
       (cond ((number? value) (number->string value))

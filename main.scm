@@ -18,34 +18,27 @@ cyclone
 |#
 
 (import (scheme base)
-	(scheme write)
-	(mylang values)
-	(mylang tokens)
-	(mylang env)
-	(mylang lexar)
-	(mylang parser)
-	(mylang error)
-	(mylang interpreter)
-	(mylang builtin prelude))
+        (scheme write)
+        (mylang values)
+        (mylang tokens)
+        (mylang env)
+        (mylang lexar)
+        (mylang parser)
+        (mylang error)
+        (mylang interpreter)
+        (mylang builtin prelude))
 
 (define mylang (make-interp all-builtins));インスタンス化
 
 
 (interp-run mylang "
-. write . add . dup 3 ;
-. write . sub . swap 5 10 ;
-. write . drop \"ゴミデータ\" \"ゴミじゃないデータ\" ;
-. write \"parfect!\" ;
-. exec ( . write \"hello\" ; ) ;
-
-. let 'hello (
-  . let 'この変数名は使わないで ;
-  . write \"hello, \" ;
-  . write この変数名は使わないで ;
-  . write \"!\" ;
-) ;
-
-. exec hello \"world\" ;
+. let 'hello!
+  . func ( x ) (
+    . write \"hello!\" ;
+    . write x ;
+  )
+;
+. hello! \"pochi\" ;
 ")
 
 (newline)

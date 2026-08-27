@@ -8,6 +8,7 @@
    env-get)
   (import (scheme base)
 	  (scheme write))
+
   (begin
     (define-record-type <env>
       (make-env-raw vars parent)

@@ -6,7 +6,8 @@
 	  (mylang builtin io-func)
 	  (mylang builtin var-func)
 	  (mylang builtin stack-func)
-	  (mylang builtin control-func))
+	  (mylang builtin control-func)
+          (mylang builtin lambda-func))
 
   (begin
     (define all-builtins
@@ -15,4 +16,5 @@
        io-func-dict
        var-func-dict
        stack-func-dict
-       control-func-dict))))
+       control-func-dict
+       lambda-func-dict))))
