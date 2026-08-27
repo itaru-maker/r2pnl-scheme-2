@@ -76,7 +76,7 @@
 	     (string-append "<builtin:" (builtin-func-name value) ">"))
 	    
 	     ((lambda-value? value)
-	      (string-append "<lambda" (if (lambda-value-line value) (string-append "at" (lambda-value-line value))) ">"))
+	      (string-append "<lambda" (if (lambda-value-line value) (string-append "at" (number->string (lambda-value-line value)))) ">"))
 	    ;;tokens
 	    ((period? value) "<period>")
 	    ((semicolon? value) "<semicolon>")

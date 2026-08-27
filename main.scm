@@ -31,25 +31,35 @@ cyclone
 (define mylang (make-interp all-builtins));インスタンス化
 
 
-(interp-run mylang "
-. let 'comment-> drop ;
 
-. let 'when
-    . func ( cond true ) (
-        . exec . if cond
-            ( true ; )
-            ( . drop #nil ; )
+
+
+
+
+
+(interp-run mylang "
+. let 'not
+    . func ( x ) (
+        . write x ;
+        . if x
+            #false
+            #true
         ;
     )
 ;
 
-. write 
-    . when #true 39 
-    . comment-> 'まあスタック指向だからあんまり使えるものじゃないけど
+. write . not #false ;
+. write . not #true ;
+. write \"\" ;
+
+
+. write . if . not #false
+            'true!
+            'false!
 ;
 
 
-")
+");何かがおかしい
 
 (newline)
 
