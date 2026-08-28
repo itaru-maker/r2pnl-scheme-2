@@ -86,6 +86,7 @@
 	
   	    (else (write "debug:unknown-type") (write  value))))
 
+    ;;value->write-stringと比べて、string以外ほぼ変わってないので存在意義があるのかは不明
     (define (value->display-string value)
       (cond ((number? value) (number->string value))
 	    ((string? value) value)

@@ -1,9 +1,9 @@
 ;;(set! %load-extensions (cons ".sld" %load-extensions));guileの人は書く
 #|実行方法：お使いの処理系に応じて使い分けてください！
 gauche
- gosh -r7 -I. main.scm
+gosh -r7 -I. main.scm
 chibi
- chibi-scheme main.scm
+chibi-scheme main.scm
 kawa
 kawa -Dkawa.import.path="./*.sld" --r7rs main.scm
 sash
@@ -41,7 +41,7 @@ cyclone
 (define r2pnl-code
   (call-with-input-file "test.r2pnl"
     (lambda (port)
-      (read-string 10000000000 port))))
+      (read-string 10000 port))))
 
 
 
