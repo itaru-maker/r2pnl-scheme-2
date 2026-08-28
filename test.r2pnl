@@ -1,0 +1,22 @@
+|display "Hello world";
+|newline;
+|exec
+   |if #true
+      (|display "hello";)
+      (|display "goodbyennn";)
+;
+
+
+|let 'myfunc
+   |func (x) (
+      |newline;
+      |display "hello,";
+      |display x;
+      |display "!";
+);
+
+|myfunc "chibi-scheme";
+|myfunc "gauche";
+|myfunc "kawa";
+|myfunc "sagittarius";
+|myfunc "guile";
