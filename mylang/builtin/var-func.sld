@@ -27,6 +27,23 @@
 	      (interp-error! interp "TypeError" (string-append "func \"set\" expect symbol-value and any-value, but value "
 							       (value->write-string name)
 							       " is passed as symbol")))))
+
+      (define (def-func interp)
+        (let* ((name (stack-pop! interp))
+               (params (stack-pop! interp))
+               (body (stack-pop! interp)))
+          (if (and (symbol-value? name) (block-value? params) (block-value? body))
+              (begin
+                (stack-push! interp
+                             (make-lambda-value
+                              params
+                              body
+                              (interp-env interp)
+                              (interp-token-line interp)))
+                (stack-push! interp name)
+                (let-func interp));真上で定義したletをかりる
+              (interp-error! interp "TypeError" "the def func expect a symbol and two block args."))))
       (define var-func-dict
 	`(("let" . ,let-func)
-	  ("set" . ,set-func)))))
+	  ("set" . ,set-func)
+          ("def" . ,def-func)))))

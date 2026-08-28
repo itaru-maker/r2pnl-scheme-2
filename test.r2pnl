@@ -1,55 +1,35 @@
-|drop "これでチューリング完全っていえたりするのかな";
+|let 'cmt drop;
 
-|let 'factorial-raw
-   |func (i total) (
-      |exec
-         |if |= i 1
-            (total;)
-            (|factorial-raw |- i 1 |* total i;);
-);
-
-
-|drop "|v-20はストッパーなのでお気になさらず"
-|let 'factorial
-   |func (i) (
-      |exec |if |= i 1 
-               (1;)
-               (|factorial-raw i 1;);
-);
-
-|display |factorial 5;
-|display "<-けっか";
-
+|def 'hello () (|display "hello!";); |cmt "これはdefのテスト";
+|hello; 
 |newline;
 
-|drop "orの再発明";
-|drop "そろそろコメント用意したほうがいい";
-
-|let 'or
-   |func (a b) (
-      |exec
-         |if a
-            (#true;)
-            (|exec |if b
-                (#true;)
-                (#false;);
-            );
+|def 'make-counter () (
+   |let 'count 0;
+   |func () (
+      |set 'count |+ count 1;
+      count;
+   );
 );
 
-|let 'or?
-   |func (x y) (
-      |write x;
-      |display " or ";
-      |write y;
-      |display " は、";
-      |write |or x y;
-      |newline;
-);
 
+|let 'counter |make-counter;
+
+|write |counter;
 |newline;
-|or? #true #true;
-|or? #false #false;
-|or? #true #false;
-|or? #false #true;
+|write |counter;
+|newline;
+|write |counter;
+|newline;
+|write |counter;
+|newline;
+|display "ここからanother";
+|newline;
 
-|write |= display display;
+|let 'another |make-counter;
+
+|write |another;
+|newline;
+|write |another;
+|newline;
+|write |another;
