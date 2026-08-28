@@ -19,7 +19,12 @@
     (define (drop-func interp)
       (stack-pop! interp))
 
+    ;;何もしない（ここにいていいのかな）
+    (define (noop-func interp)
+      '())
+
     (define stack-func-dict
       `(("dup" . ,dup-func)
 	("swap" . ,swap-func)
-	("drop" . ,drop-func)))))
+	("drop" . ,drop-func)
+        ("noop" . ,noop-func)))))

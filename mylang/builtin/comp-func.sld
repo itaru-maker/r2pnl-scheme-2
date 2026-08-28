@@ -15,52 +15,52 @@
       (let*
           ((a (stack-pop! interp))
            (b (stack-pop! interp)))
+        (stack-push! interp
+          (cond
+           ((and (number? a) (number? b))
+            (equal? a b))
+           
+           ((and (string? a) (string? b))
+            (equal? a b))
+           
+           ((and (eq? a #t) (eq? a #t))
+            #t)
 
-        (cond
-         ((and (number? a) (number? b))
-          (equal? a b))
-         
-         ((and (string? a) (string? b))
-          (equal? a b))
+           ((and (not a) (not b))
+            #t)
+           
+           ((and (nil-value? a) (nil-value? b))
+            #t)
 
-         ((and (eq? a #t) (eq? a #t))
-          #t)
+           ((and (symbol-value? a) (symbol-value? b))
+            (equal? (symbol-value-token a) (symbol-value-token b)))
+           ;;わざわざtoken取らなくてもいいのかな
 
-         ((and (not a) (not b))
-          #t)
+           ((and (lazy-value? a) (lazy-value? b))
+            (equal? (lazy-value-token a ) (lazy-value-token b)))
 
-         ((and (nil-value? a) (nil-value? b))
-          #t)
+           ((and (block-value? a) (block-value? b))
+            (equal? a b));これでいいの？
+           
+           ((and (builtin-func? a) (builtin-func? b))
+            (equal? a b))
 
-         ((and (symbol-value? a) (symbol-value? b))
-          (equal? (symbol-value-token a) (symbol-value-token b)))
-         ;わざわざtoken取らなくてもいいのかな
+           ((and (lambda-value? a) (lambda-value? b))
+            (equal? a b))
 
-         ((and (lazy-value? a) (lazy-value? b))
-          (equal? (lazy-value-token a ) (lazy-value-token b)))
+           ((and (trigger? a) (trigger? b))
+            #t)
 
-         ((and (block-value? a) (block-value? b))
-          (equal? a b));これでいいの？
+           ((and (semicolon? a) (semicolon? b))
+            #t)
+           
+           ((and (r-paren? a) (l-paren? b))
+            #t)
+           
+           ((and (l-paren? a) (l-paren? b))
+            #t)
 
-         ((and (builtin-func? a) (builtin-func? b))
-          (equal? a b))
-
-         ((and (lambda-value? a) (lambda-value? b))
-          (equal? a b))
-
-         ((and (trigger? a) (trigger? b))
-          #t)
-
-         ((and (semicolon? a) (semicolon? b))
-          #t)
-
-         ((and (r-paren? a) (l-paren? b))
-          #t)
-
-         ((and (l-paren? a) (l-paren? b))
-          #t)
-
-         (else (interp-error! interp "InterpreterError!" "unknown word!!")))))
+           (else #f)))))
     (define comp-func-dict
       `(("is?" . ,is-func)
         ("=" . ,eq-func)))))

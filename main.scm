@@ -41,14 +41,13 @@ cyclone
 (define r2pnl-code
   (call-with-input-file "test.r2pnl"
     (lambda (port)
-      (read-string 10000 port))))
+      (string-copy (read-string 10000 port)))));よくわからないけどguileの内部構造的にコピーを作らないといけないらしい（他の処理系では動く）
 
 
 
-(interp-run mylang 
-r2pnl-code
-)
+(interp-run mylang r2pnl-code);実行する
 
 (newline)
+
 
 
