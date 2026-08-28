@@ -6,7 +6,7 @@
       (or (char=? chr #\()
           (char=? chr #\))
           (char=? chr #\;)
-          (char=? chr #\:)))
+          (char=? chr #\|)))
     
     ;; plain-codeを受け取り、((token . line) (token . line)) の形で返す
     (define (lexar plain-code)

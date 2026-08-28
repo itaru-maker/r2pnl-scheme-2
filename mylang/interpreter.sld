@@ -103,7 +103,7 @@
 	      ((lazy-value? item)
 	       (stack-push! interp (parse-one-token (lazy-value-token item) item-line)))
 	      
-	      ((period? item)
+	      ((trigger? item)
 	       (invoke! interp (stack-pop! interp)))
 	      
 	      (else

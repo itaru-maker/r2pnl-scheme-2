@@ -10,5 +10,15 @@
 	 (value->write-string
 	  (stack-pop! interp))))
 
+      (define (display-func interp)
+        (display
+         (value->display-string
+          (stack-pop! interp))))
+
+      (define (newline-func interp)
+        (display "\n"))
+
       (define io-func-dict
-	`(("write" . ,write-func)))))
+	`(("write" . ,write-func)
+          ("display" . ,display-func)
+          ("newline" . ,newline-func)))))

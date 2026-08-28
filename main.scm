@@ -19,6 +19,7 @@ cyclone
 
 (import (scheme base)
         (scheme write)
+        (scheme file)
         (mylang values)
         (mylang tokens)
         (mylang env)
@@ -34,29 +35,19 @@ cyclone
 
 
 
+(import (scheme base)
+        (scheme file))
+
+(define r2pnl-code
+  (call-with-input-file "test.r2pnl"
+    (lambda (port)
+      (read-string 10000000000 port))))
 
 
 
-(interp-run mylang "
-:let 'not
-    :func (x) (
-        :write x;
-        :if x
-            #false
-            #true
-        ;
-    )
-;
-
-:write :not #false;
-:write :not #true;
-:write \"\";
-
-
-:write :if :not #false 'true! 'false!;
-
-
-")
+(interp-run mylang 
+r2pnl-code
+)
 
 (newline)
 

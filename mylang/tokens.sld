@@ -1,17 +1,17 @@
 (define-library (mylang tokens)
   (export
-   period? the-period
+   trigger? the-trigger
    semicolon? the-semicolon
    r-paren? the-r-paren
    l-paren? the-l-paren)
   (import (scheme base))
 
   (begin
-    (define-record-type <period>
-      (make-period)
-      period?)
+    (define-record-type <trigger>
+      (make-trigger)
+      trigger?)
 
-    (define the-period (make-period))
+    (define the-trigger (make-trigger))
 
     (define-record-type <semicolon>
       (make-semicolon)

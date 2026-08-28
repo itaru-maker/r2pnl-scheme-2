@@ -8,7 +8,8 @@
    block-value-append!
    make-builtin-func builtin-func? builtin-func-name builtin-func-proc
    make-lambda-value lambda-value? lambda-value-params lambda-value-body lambda-value-env lambda-value-line 
-   value->write-string)
+   value->write-string
+   value->display-string)
   (import (scheme base)
 	  (scheme write)
 	  (mylang tokens))
@@ -78,12 +79,36 @@
 	     ((lambda-value? value)
 	      (string-append "<lambda" (if (lambda-value-line value) (string-append "at" (number->string (lambda-value-line value)))) ">"))
 	    ;;tokens
-	    ((period? value) "<period>")
+	    ((trigger? value) "<trigger>")
+	    ((semicolon? value) "<semicolon>")
+	    ((r-paren? value) "<r-paren>")
+	    ((l-paren? value) "<l-paren>")
+	
+  	    (else (write "debug:unknown-type") (write  value))))
+
+    (define (value->display-string value)
+      (cond ((number? value) (number->string value))
+	    ((string? value) value)
+	    ((boolean? value) (if value "#true" "#false"))
+	    ((nil-value? value) "#nil")
+	    ;;((label-value? value) (string-append ":" (label-value-token value)))
+	    ((symbol-value? value) (symbol-value-token value))
+	    ((lazy-value? value) (string-append "'" (lazy-value-token value)))
+	    ((block-value? value)
+	     (string-append "( "
+			    (apply string-append (map (lambda (pair) (string-append (value->write-string (car pair)) " ")) (block-value-items value)))
+			    ")"))
+	    ((builtin-func? value)
+	     (string-append "<builtin:" (builtin-func-name value) ">"))
+	    
+	     ((lambda-value? value)
+	      (string-append "<lambda" (if (lambda-value-line value) (string-append "at" (number->string (lambda-value-line value)))) ">"))
+	    ;;tokens
+	    ((trigger? value) "<trigger>")
 	    ((semicolon? value) "<semicolon>")
 	    ((r-paren? value) "<r-paren>")
 	    ((l-paren? value) "<l-paren>")
 	
   	    (else (write "debug:unknown-type") (write  value))))))
-
 
    
