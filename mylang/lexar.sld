@@ -7,6 +7,8 @@
           (char=? chr #\))
           (char=? chr #\;)
           (char=? chr #\|)))
+
+    (define cmt-chr #\!);コメント記号
     
     ;; plain-codeを受け取り、((token . line) (token . line)) の形で返す
     (define (lexar plain-code)
@@ -51,7 +53,7 @@
                       (loop (+ i 1) '() #f 0 #f (+ line 1) tokens)
                       (loop (+ i 1) '() #f 0 #t line tokens)))
 
-                 ((and (not in-str?) (= comment-depth 0) (char=? #\! chr))
+                 ((and (not in-str?) (= comment-depth 0) (char=? cmt-chr chr))
                   (loop (+ i 1) '() #f 0 #t line (flash-chars chars tokens line)))
 
                  
@@ -82,7 +84,7 @@
 			(+ line 1)
 			(flash-chars chars tokens line)))
 
-		 ((char=? #\space chr)
+		 ((or (char=? #\space chr) (char=? #\tab chr))
 		  (loop (+ i 1)
 			'()
 			#f

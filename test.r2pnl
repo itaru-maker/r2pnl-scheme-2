@@ -1,37 +1,23 @@
-{やっとコメントが書けるようになったぜ}
-
-|let 'cmt drop; 
-
-|def 'hello () (|display "hello!";); !defのテスト
-|hello; 
-|newline;
-
-|def 'make-counter () (
-   |let 'count 0;
-   |func () (
-      |set 'count |+ count 1;
-      count;
-   );
+|def 'if-do (cond then else) (
+   |exec |if cond
+      then
+      else;
 );
 
-!インスタンスの作成
-|let 'counter |make-counter;
+|def 'loop (limit now block) (
+   |if-do |= limit now
+      (|noop;)
+      (|exec block; |loop limit |+ now 1 block;)
+   ;
+);
 
-|write |counter;
-|newline;
-|write |counter;
-|newline;
-|write |counter;
-|newline;
-|write |counter;
-|newline;
-|display "ここからanother";
-|newline;
+{!なぜかこっちは可能
+|def 'loop (limit now block) (
+   |exec |if |= limit now
+      (|noop;)
+      (|exec block; |loop limit |+ now 1 block;)
+   ;
+);
+}
 
-|let 'another |make-counter;
-
-|write |another;
-|newline;
-|write |another;
-|newline;
-|write |another;
+|loop 10 0 (|write "hello";);
