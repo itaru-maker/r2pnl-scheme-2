@@ -1,6 +1,8 @@
-|let 'cmt drop;
+{やっとコメントが書けるようになったぜ}
 
-|def 'hello () (|display "hello!";); |cmt "これはdefのテスト";
+|let 'cmt drop; 
+
+|def 'hello () (|display "hello!";); !defのテスト
 |hello; 
 |newline;
 
@@ -12,7 +14,7 @@
    );
 );
 
-
+!インスタンスの作成
 |let 'counter |make-counter;
 
 |write |counter;

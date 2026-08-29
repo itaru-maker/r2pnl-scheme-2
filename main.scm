@@ -31,10 +31,6 @@ cyclone
 
 (define mylang (make-interp all-builtins));インスタンス化
 
-
-
-
-
 (import (scheme base)
         (scheme file))
 
@@ -43,10 +39,7 @@ cyclone
     (lambda (port)
       (string-copy (read-string 10000 port)))));よくわからないけどguileの内部構造的にコピーを作らないといけないらしい（他の処理系では動く）
 
-
-
 (interp-run mylang r2pnl-code);実行する
-
 (newline)
 
 

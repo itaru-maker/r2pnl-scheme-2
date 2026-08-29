@@ -14,6 +14,8 @@
 	(let loop ((i 0) ; カウンター
 		   (chars '()) ; 現在のtoken の、文字ごとのリスト (逆向き)
 		   (in-str? #f)
+                   (comment-depth 0)
+                   (in-line-cmt? #f)
 		   (line 0) ; 現在地
 		   (tokens '())); 返すやつ(逆向き)
 	  
@@ -28,11 +30,37 @@
 	  (if (= i code-len) ;終了だったら、
 	      (reverse (flash-chars chars tokens line))
 	      (let ((chr (string-ref plain-code i)))
+                
 		(cond
+                 ((< 0 comment-depth)
+                  (cond
+                   ((char=? #\newline chr)
+                    (loop (+ i 1) '() #f comment-depth  #f (+ line 1) tokens))
+                   ((char=? #\{ chr)
+                    (loop (+ i 1) '() #f (+ comment-depth 1) #f  line tokens))
+                   ((char=? #\} chr)
+                    (loop (+ i 1) '() #f (- comment-depth 1) #f line tokens))
+                   (else (loop (+ i 1) '() #f comment-depth #f line tokens))))
+
+                 ((and (not in-str?) (not in-line-cmt?) (char=? #\{ chr))
+                  (loop (+ i 1) '() #f 1 #f line (flash-chars chars tokens line)))
+
+
+                 (in-line-cmt?
+                  (if (char=? #\newline chr)
+                      (loop (+ i 1) '() #f 0 #f (+ line 1) tokens)
+                      (loop (+ i 1) '() #f 0 #t line tokens)))
+
+                 ((and (not in-str?) (= comment-depth 0) (char=? #\! chr))
+                  (loop (+ i 1) '() #f 0 #t line (flash-chars chars tokens line)))
+
+                 
 		 ((char=? #\" chr)
 		  (loop (+ i 1)
 			(cons chr chars)
 			(not in-str?)
+                        0
+                        #f
 			line
 			tokens))
 
@@ -40,34 +68,44 @@
 		  (loop (+ i 1)
 			(cons chr chars)
 			in-str?
+                        0
+                        #f
 			line
 			tokens))
 
 		 ((char=? #\newline chr)
 		  (loop (+ i 1)
 			'()
-			in-str?
+			#f
+                        0
+                        #f
 			(+ line 1)
 			(flash-chars chars tokens line)))
 
 		 ((char=? #\space chr)
 		  (loop (+ i 1)
 			'()
-			in-str?
+			#f
+                        0
+                        #f
 			line
 			(flash-chars chars tokens line)))
 
                  ((delimiter? chr);一つで区切り文字として動くやつだったら、
                   (loop (+ i 1)
                         '()
-                        in-str?
+                        #f
+                        0
+                        #f
                         line
                         (flash-delim chr (flash-chars chars tokens line) line)))
 
 		 (else
 		  (loop (+ i 1)
 			(cons chr chars)
-			in-str?
-			line
+			#f
+                        0
+                        #f
+                        line
 			tokens))))))))))
 
