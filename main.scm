@@ -1,4 +1,3 @@
-;;(set! %load-extensions (cons ".sld" %load-extensions));guileの人は書く
 #|実行方法：お使いの処理系に応じて使い分けてください！
 gauche
 gosh -r7 -I. main.scm

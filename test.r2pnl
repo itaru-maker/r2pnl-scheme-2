@@ -1,35 +1,24 @@
-!! fizzbuzzでもやってみようかな
+!! blockをデータ構造としても使えるようにする
 
-!! mod modoki
-|def 'mod-oki (a b) (
-   |let 'quotient
-      |int
-         |div a b;
-   |- a |* b quotient;
-);
+|let 'list50-on
+  ((a i u e o)
+   (ka ki ku ke ko)
+   (sa shi su se so)
+   (ta chi tsu te to)
+   (na ni nu ne no)
+   (ha hi fu he ho)
+   (ma mi mu me mo)
+   (ya yu yo)
+   (ra ri ru re ro)
+   (wa wi wu we wo)
+   (n))
+;
 
-|def 'fizzbuzz-branch (num) (
-   |exec |if |= 0 |mod-oki num 15
-      (|display "fizzbuzz";)
-      
-      (|exec |if |= 0 |mod-oki num 5
-          (|display "buzz";)
-          
-          (|exec |if |= 0 |mod-oki num 3
-             (|display "fizz";)
-             (|display num;);
-          );
-      );
-   |newline;
-);
 
-|def 'fizzbuzz (current-num) (
-   |exec |if |= 100 current-num
-      (|noop;)
-      (
-      |fizzbuzz-branch current-num;
-      |fizzbuzz |+ current-num 1;
-      );
-);
+|display |head |head |tail |tail |tail list50-on;
+|display |head |head |tail |tail |tail |tail list50-on;
+|display |head |head |tail list50-on;
+|display ", hello!";
+|newline;
 
-|fizzbuzz 1;
+
