@@ -1,23 +1,35 @@
-|def 'if-do (cond then else) (
-   |exec |if cond
-      then
-      else;
+!! fizzbuzzでもやってみようかな
+
+!! mod modoki
+|def 'mod-oki (a b) (
+   |let 'quotient
+      |int
+         |div a b;
+   |- a |* b quotient;
 );
 
-|def 'loop (limit now block) (
-   |if-do |= limit now
+|def 'fizzbuzz-branch (num) (
+   |exec |if |= 0 |mod-oki num 15
+      (|display "fizzbuzz";)
+      
+      (|exec |if |= 0 |mod-oki num 5
+          (|display "buzz";)
+          
+          (|exec |if |= 0 |mod-oki num 3
+             (|display "fizz";)
+             (|display num;);
+          );
+      );
+   |newline;
+);
+
+|def 'fizzbuzz (current-num) (
+   |exec |if |= 100 current-num
       (|noop;)
-      (|exec block; |loop limit |+ now 1 block;)
-   ;
+      (
+      |fizzbuzz-branch current-num;
+      |fizzbuzz |+ current-num 1;
+      );
 );
 
-{!なぜかこっちは可能
-|def 'loop (limit now block) (
-   |exec |if |= limit now
-      (|noop;)
-      (|exec block; |loop limit |+ now 1 block;)
-   ;
-);
-}
-
-|loop 10 0 (|write "hello";);
+|fizzbuzz 1;

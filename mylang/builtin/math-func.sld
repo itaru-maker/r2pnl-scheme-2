@@ -2,6 +2,7 @@
   (export math-func-dict)
   (import (scheme base)
 	  (scheme write)
+          (mylang values)
 	  (mylang interpreter))
   (begin
   (define (add-func interp)
@@ -10,6 +11,7 @@
       (if (and (number? a) (number? b))
 	  (stack-push! interp (+ a b))
 	  (interp-error! interp "TypeError" "func \"add\" expects two numbers args"))))
+
   (define (sub-func interp)
     (let* ((a (stack-pop! interp))
 	   (b (stack-pop! interp)))
@@ -22,7 +24,7 @@
 	   (b (stack-pop! interp)))
       (if (and (number? a) (number? b))
 	  (stack-push! interp (* a b))
-	  (interp-error! interp "TypeError" "func \"mul\" expects two numbers args"))))
+	  (interp-error! interp "TypeError" (string-append "func \"mul\" expects two numbers args but," (value->write-string a)"and" (value->write-string b))))))
 
   (define (div-func interp)
     (let* ((a (stack-pop! interp))
@@ -30,6 +32,15 @@
       (if (and (number? a) (number? b))
 	  (stack-push! interp (/ a b))
 	  (interp-error! interp "TypeError" "func \"div\" expects two numbers args"))))
+  
+  ;;mod floor-div ** はあとで
+
+  (define (int-func interp)
+    (let ((a (stack-pop! interp)))
+      (if (number? a)
+          (stack-push! interp (floor a))
+          (interp-error! interp "TypeError" "func \"int\" expects a number args"))))
+  
 
   (define math-func-dict
     `(("add" . ,add-func)
@@ -39,5 +50,6 @@
       ("+" . ,add-func)
       ("-" . ,sub-func)
       ("*" . ,mul-func)
-      ("/" . ,div-func)))))
+      ("/" . ,div-func)
+      ("int" . ,int-func)))))
   
