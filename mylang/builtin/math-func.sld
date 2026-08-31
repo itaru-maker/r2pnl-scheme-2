@@ -30,7 +30,9 @@
     (let* ((a (stack-pop! interp))
 	   (b (stack-pop! interp)))
       (if (and (number? a) (number? b))
-	  (stack-push! interp (/ a b))
+          (if (zero? b)
+              (interp-error! interp "ZeroDivError" "division of zero")
+	      (stack-push! interp (/ a b)))
 	  (interp-error! interp "TypeError" "func \"div\" expects two numbers args"))))
   
   ;;mod floor-div ** はあとで

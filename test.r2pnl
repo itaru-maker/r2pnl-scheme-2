@@ -2,7 +2,7 @@
 
 |let 'list50-on
   ((a i u e o)
-   (ka ki ku ke ko)
+  (ka ki ku ke ko)
    (sa shi su se so)
    (ta chi tsu te to)
    (na ni nu ne no)
@@ -22,3 +22,11 @@
 |newline;
 
 
+|display |head |head |tail |tail |tail |tail |tail |tail |tail list50-on;
+|display |head |head |tail |tail |tail |tail |tail |tail list50-on;
+|display |head |tail |tail |tail |tail |head |tail |tail |tail |tail |tail |tail list50-on;
+|display |head |tail |tail |tail |tail |head |tail |tail |tail list50-on;
+|display ", hello!";
+|newline;
+
+|display |/ 3 0; !エラー
