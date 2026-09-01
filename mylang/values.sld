@@ -70,9 +70,9 @@
 	    ((symbol-value? value) (symbol-value-token value))
 	    ((lazy-value? value) (string-append "'" (lazy-value-token value)))
 	    ((block-value? value)
-	     (string-append "( "
+	     (string-append "("
 			    (apply string-append (map (lambda (pair) (string-append (value->write-string (car pair)) " ")) (block-value-items value)))
-			    ")"))
+			    "\b)"))
 	    ((builtin-func? value)
 	     (string-append "<builtin:" (builtin-func-name value) ">"))
 	    
@@ -96,9 +96,9 @@
 	    ((symbol-value? value) (symbol-value-token value))
 	    ((lazy-value? value) (string-append "'" (lazy-value-token value)))
 	    ((block-value? value)
-	     (string-append "( "
+	     (string-append "("
 			    (apply string-append (map (lambda (pair) (string-append (value->write-string (car pair)) " ")) (block-value-items value)))
-			    ")"))
+			    "\b)"));ちょっとやり方汚いから、後々修正(あと空リストが)だけになる)
 	    ((builtin-func? value)
 	     (string-append "<builtin:" (builtin-func-name value) ">"))
 	    

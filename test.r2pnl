@@ -1,32 +1,25 @@
-!! blockをデータ構造としても使えるようにする
+!適当な
+|write |pack 3  1 2 3;
+|newline;
 
-|let 'list50-on
-  ((a i u e o)
-  (ka ki ku ke ko)
-   (sa shi su se so)
-   (ta chi tsu te to)
-   (na ni nu ne no)
-   (ha hi fu he ho)
-   (ma mi mu me mo)
-   (ya yu yo)
-   (ra ri ru re ro)
-   (wa wi wu we wo)
-   (n))
+|write |null-block? ();
+|newline;
+
+|write |cons 89 ();
+|newline;
+
+
+|let 'augend 129837;
+|let 'addend 129873;
+|exec |if #true
+  |pack 7 '| display '| + augend addend ';
+  (noop;)
 ;
+|newline;
 
-
-|display |head |head |tail |tail |tail list50-on;
-|display |head |head |tail |tail |tail |tail list50-on;
-|display |head |head |tail list50-on;
-|display ", hello!";
+|write |pack 7 '| display '| + augend addend ';;
+|newline;
+|write (| display | + augend addend ;);
 |newline;
 
 
-|display |head |head |tail |tail |tail |tail |tail |tail |tail list50-on;
-|display |head |head |tail |tail |tail |tail |tail |tail list50-on;
-|display |head |tail |tail |tail |tail |head |tail |tail |tail |tail |tail |tail list50-on;
-|display |head |tail |tail |tail |tail |head |tail |tail |tail list50-on;
-|display ", hello!";
-|newline;
-
-|display |/ 3 0; !エラー

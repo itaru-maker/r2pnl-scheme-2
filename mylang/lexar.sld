@@ -94,13 +94,22 @@
 			(flash-chars chars tokens line)))
 
                  ((delimiter? chr);一つで区切り文字として動くやつだったら、
-                  (loop (+ i 1)
-                        '()
-                        #f
-                        0
-                        #f
-                        line
-                        (flash-delim chr (flash-chars chars tokens line) line)))
+                  (if (and (not (null? chars)) (char=? #\' (car chars)))
+                      (loop (+ i 1);'|や'; の時とか
+                            (cons chr chars)
+                            #f
+                            0
+                            #f
+                            line
+                            tokens)
+                      
+                      (loop (+ i 1);|や;の時とか
+                            '()
+                            #f
+                            0
+                            #f
+                            line
+                            (flash-delim chr (flash-chars chars tokens line) line))))
 
 		 (else
 		  (loop (+ i 1)
