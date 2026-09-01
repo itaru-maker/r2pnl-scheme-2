@@ -12,7 +12,7 @@
 |let 'augend 129837;
 |let 'addend 129873;
 |exec |if #true
-  |pack 7 '| display '| + augend addend ';
+  |pack 7 '| display '| + augend addend '; ! わざわざpackしなくても動くけど、
   (noop;)
 ;
 |newline;
@@ -21,5 +21,24 @@
 |newline;
 |write (| display | + augend addend ;);
 |newline;
+
+|def '比較 (a b) ( ! 日本語の変数も可能
+   |write a;
+   |display " と ";
+   |write b;
+   |display " は ";
+   |display
+      |if
+         |= a b
+         "たぶん同じもの"
+         "たぶん違うもの";
+   |display "です。";
+);         
+   
+!! 定義する行が違うとたぶん違うものになるエラーあります
+|let 'a |pack 3 1 2 3; |let 'b (1 2 3);
+|比較 a b;
+
+|比較 'たこ焼きが食べたい "たこ焼きが食べたい";
 
 

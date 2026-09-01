@@ -40,7 +40,7 @@
             (equal? (lazy-value-token a ) (lazy-value-token b)))
 
            ((and (block-value? a) (block-value? b))
-            (equal? a b));これでいいの？
+            (equal? (block-value-items a) (block-value-items b)));これでいいの？<=よくないです。作られた行が違うと偽になる。のちに改善
            
            ((and (builtin-func? a) (builtin-func? b))
             (equal? a b))
