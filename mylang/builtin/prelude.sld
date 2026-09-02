@@ -9,7 +9,8 @@
 	  (mylang builtin control-func)
           (mylang builtin lambda-func)
           (mylang builtin comp-func)
-          (mylang builtin block-func))
+          (mylang builtin block-func)
+          (mylang builtin value-func))
 
   (begin
     (define all-builtins
@@ -21,4 +22,5 @@
        control-func-dict
        lambda-func-dict
        comp-func-dict
-       block-func-dict))))
+       block-func-dict
+       value-func-dict))))

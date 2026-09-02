@@ -19,14 +19,8 @@
     (define-record-type <nil-value>
       (make-nil-value)
       nil-value?)
-
     (define the-nil (make-nil-value)) ; nil唯一のインスタンス
-
-    ;;(define-record-type <label-value>;廃止するかも
-    ;; (make-label-value token)
-    ;;  label-value?
-    ;;  (token label-value-token)) ; tokenはlabel-value-tokenで取得する
-
+    
     (define-record-type <symbol-value>
       (make-symbol-value token)
       symbol-value?
