@@ -10,7 +10,8 @@
           (mylang builtin lambda-func)
           (mylang builtin comp-func)
           (mylang builtin block-func)
-          (mylang builtin value-func))
+          (mylang builtin value-func)
+          (mylang builtin higher-order-func))
 
   (begin
     (define all-builtins
@@ -23,4 +24,5 @@
        lambda-func-dict
        comp-func-dict
        block-func-dict
-       value-func-dict))))
+       value-func-dict
+       higher-order-func-dict))))

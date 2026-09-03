@@ -8,6 +8,8 @@
    call-lambda!
    invoke!
 
+   exec-block
+   apply-callable!
    execute-sentence
    interp-run)
   (import
@@ -87,16 +89,33 @@
       (if (null? lst)
 	  '()
 	  (reverse (cdr (reverse lst)))))
+
+    (define (exec-block block interp)
+      ;;blockを実行（外には渡さない）
+      (let*
+          ((sentences (tokens->sentences (block-value-items block))))
+        (for-each (lambda (one-sentence) (execute-sentence interp one-sentence)) sentences)))
+
+    (define (apply-callable! interp value)
+      (cond
+       ((block-value? value)
+        (exec-block value interp))
+       ((lambda-value? value)
+        (call-lambda! interp value))
+       ((builtin-func? value)
+        ((builtin-func-proc value) interp))
+       (else
+        (interp-erorr! interp "TypeError" "expects callable"))))
     
-    (define (execute-sentence interp sentence);一つだけ、文をもらう
-      (let ((body (reverse (all-but-last sentence))));逆向きにする（速いから）
+    (define (execute-sentence interp sentence) ;一つだけ、文をもらう
+      (let ((body (reverse (all-but-last sentence)))) ;逆向きにする（速いから）
 	(for-each
 	 (lambda (pair)
-	   (let ((item (car pair)) (item-line (cdr pair)));ここで分離
+	   (let ((item (car pair)) (item-line (cdr pair))) ;ここで分離
 	     (interp-token-line-set! interp item-line)
 	     (cond
 	      ((symbol-value? item)
-	       (if (in-env? (interp-env interp) (symbol-value-token item));安全確認
+	       (if (in-env? (interp-env interp) (symbol-value-token item)) ;安全確認
 		   (stack-push! interp (env-get (interp-env interp) (symbol-value-token item)))
 		   (interp-error! interp "NameError" (string-append "unknown-name:" (symbol-value-token item)))))
 
@@ -108,7 +127,7 @@
 	      
 	      (else
 	       (stack-push! interp item)))))
-     body)))
+         body)))
     
     (define (interp-run interp code)
       (guard (e;エラーをキャッチ
