@@ -138,6 +138,7 @@
 	       (for-each (lambda (x) (display x))
 			 (reverse (mylang-error-trace e)))
 	       (display (string-append (mylang-error-name e) ":" (mylang-error-message e) " at line " (number->string (mylang-error-line e))))))
+
 	(let*
 	    ((raw-tokens (lexar code))
 	     (types (sorting-types raw-tokens))

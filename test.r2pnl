@@ -1,74 +1,35 @@
 {
-|def 'pred (func arg) (
-   |display |func arg;
-   |newline;
-);
-
-!num? 関数
-|pred num? 10;
-|pred num? "hello!";
-
-!str? 
-|pred str? "takoyaki";
-|pred str? #true;
-
-!true? false? 
-|pred true? #true;
-|pred true? 'aiueo;
-
-|pred false? #false;
-|pred false? 'kakikukeko;
-
-!nil?
-|pred nil? #nil;
-|pred nil? ();
-
-!symbol?
-|pred symbol? 'symbol?;
-|pred symbol? "not a symbol";
-
-!lazy?
-|pred lazy? ''#true;
-|pred lazy? 'not-lazy;
-
-!block?
-|pred block? (banana banana banana banana);
-|pred block? #nil;
-
-!builtin?
-|pred builtin? write;
-|pred builtin? pred;
-
-!lambda?
-|pred lambda? pred;
-|pred lambda? noop;
-
-!trigger?
-|pred trigger? '| ;
-|pred trigger? "";
-
-!semicolon?
-|pred semicolon? ';;
-|pred semicolon? '(;
-
-!paren?
-|pred r-paren? ');
-|pred r-paren? '(;
-
-|pred l-paren? '(;
-|pred l-paren? ');
 
 
-|exec (|write "hello";);
-!多分ok
-}
 
-|map
-   |func (x) (
-      |write x;
-      |+ x |/ 10 |* 4 3.14;
-   )
-   (1 2 3 4 5)
-;
 
-|write;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

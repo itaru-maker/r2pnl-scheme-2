@@ -1,6 +1,7 @@
 (define-library (mylang lexar)
   (export lexar)
-  (import (scheme base))
+  (import (scheme base)
+          (mylang error))
   (begin
     (define (delimiter? chr)
       (or (char=? chr #\()
@@ -30,7 +31,11 @@
             (cons (cons (string chr) line) tokens))
       
 	  (if (= i code-len) ;終了だったら、
-	      (reverse (flash-chars chars tokens line))
+	      (begin
+                (if (> comment-depth 0);コメントが閉じているか
+                    (raise-mylang-error! "parse-error" "unclosed comment" line)
+                    (reverse (flash-chars chars tokens line))))
+              
 	      (let ((chr (string-ref plain-code i)))
                 
 		(cond
@@ -46,6 +51,9 @@
 
                  ((and (not in-str?) (not in-line-cmt?) (char=? #\{ chr))
                   (loop (+ i 1) '() #f 1 #f line (flash-chars chars tokens line)))
+
+                 ((and (not in-str?) (not in-line-cmt?) (char=? #\} chr))
+                  (raise-mylang-error! "parse-error" "extra closing }!" line))
 
 
                  (in-line-cmt?
@@ -93,9 +101,9 @@
 			line
 			(flash-chars chars tokens line)))
 
-                 ((delimiter? chr);一つで区切り文字として動くやつだったら、
+                 ((delimiter? chr) ;一つで区切り文字として動くやつだったら、
                   (if (and (not (null? chars)) (char=? #\' (car chars)))
-                      (loop (+ i 1);'|や'; の時とか
+                      (loop (+ i 1)     ;'|や'; の時とか
                             (cons chr chars)
                             #f
                             0
@@ -103,7 +111,7 @@
                             line
                             tokens)
                       
-                      (loop (+ i 1);|や;の時とか
+                      (loop (+ i 1)     ;|や;の時とか
                             '()
                             #f
                             0
