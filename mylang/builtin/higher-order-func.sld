@@ -10,7 +10,7 @@
       (let* ((proc (stack-pop! interp))
              (lst (stack-pop! interp)))
         (if (not (block-value? lst))
-            (interp-error! "TypeError" "the \"map\" func excepts a block as second arg.")
+            (interp-error! interp  "TypeError" "the \"map\" func excepts a block as second arg.")
             (let loop ((items (block-value-items lst)) (acc '()))
               (if (null? items)
                   (stack-push! interp (make-block-value (reverse acc)))

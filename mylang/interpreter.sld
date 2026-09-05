@@ -105,7 +105,7 @@
        ((builtin-func? value)
         ((builtin-func-proc value) interp))
        (else
-        (interp-erorr! interp "TypeError" "expects callable"))))
+        (interp-error! interp "TypeError" "expects callable"))))
     
     (define (execute-sentence interp sentence) ;一つだけ、文をもらう
       (let ((body (reverse (all-but-last sentence)))) ;逆向きにする（速いから）

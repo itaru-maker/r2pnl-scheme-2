@@ -1,24 +1,24 @@
-!昔のコードから勝手に持ち出し
-|def 'loop-raw (limit now block) (
-   |exec |if |= limit now
-      (|noop;)
-      (|exec block;
-       |loop-raw limit |+ now 1 block;)
+|def 'not (x) (
+   |if x
+      #false
+      #true
    ;
 );
 
-|def 'repeat (time block) (
-   |loop-raw time 0 block;
+|let 'count 0;
+|while (|not |= 10 count;) (
+   |write count;
+   |set 'count |+ count 1;
 );
 
-
-let 'pi 0;!初期値
-let 'count 1;
 
 |repeat 10 (
-   |set 'pi |+ pi |/ 1 count;
-   |set 'pi |- pi |/ 1 count;
-   |set 'count |+ count 2;
+   |display "hello";
+   |newline;
 );
 
 
+|repeat 33 (
+   |display "エディタは、emacsがおすすめです。（emacserの声）";
+   |newline;
+);

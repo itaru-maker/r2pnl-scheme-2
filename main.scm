@@ -1,7 +1,7 @@
 #|実行方法：お使いの処理系に応じて使い分けてください！
 gauche
-gosh -r7 -I. main.scmxc                                        ;
-chibi                                   ;
+gosh -r7 -I. main.scm
+chibi
 chibi-scheme main.scm
 kawa
 kawa -Dkawa.import.path="./*.sld" --r7rs main.scm
