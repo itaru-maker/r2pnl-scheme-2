@@ -1,13 +1,13 @@
 #|実行方法：お使いの処理系に応じて使い分けてください！
-gauche
+gauche （エラーコードがわかりやすい）
 gosh -r7 -I. main.scm
-chibi
+chibi（r7rsに忠実）
 chibi-scheme main.scm
 kawa
 kawa -Dkawa.import.path="./*.sld" --r7rs main.scm
 sash
 sash -r7 -L . main.scm
-guile
+guile（速い！）
 guile --r7rs -L . main.scm
 chicken
  むりだった！(r7rs-eggがsldファイルに非対応のため)

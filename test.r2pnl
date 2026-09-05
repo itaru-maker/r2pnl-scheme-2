@@ -1,24 +1,19 @@
-|def 'not (x) (
-   |if x
-      #false
-      #true
-   ;
-);
+!ベンチマークみたいなの。pythonより50倍くらい遅いらしいですorz(しょうがない)
+!可読性ひっく
 
-|let 'count 0;
-|while (|not |= 10 count;) (
-   |write count;
-   |set 'count |+ count 1;
-);
-
-
-|repeat 10 (
-   |display "hello";
-   |newline;
+|def 'fib (n) (
+    |if-exec |< n 2 (
+        n; 
+    )(
+        |+ |fib |- n 1
+           |fib |- n 2;
+    );     
 );
 
 
-|repeat 33 (
-   |display "エディタは、emacsがおすすめです。（emacserの声）";
-   |newline;
-);
+|write |fib 20;
+!27までにしといてください(終わりません)
+
+
+
+

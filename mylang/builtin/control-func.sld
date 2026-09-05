@@ -30,17 +30,32 @@
           (stack-push! interp false-then)
           (stack-push! interp true-then))))
 
+    (define (if-exec-func interp)
+      (let*
+          ((condition (stack-pop! interp))
+           (true-then (stack-pop! interp))
+           (false-then (stack-pop! interp)))
+        (if (not (and (block-value? true-then) (block-value? false-then)))
+            (interp-error! interp "TypeError" "if-exec func expects one any value and two block args."))
+        (if (or
+             (eq? #f condition)
+             (nil-value? condition))
+            (exec-block false-then interp)
+            (exec-block true-then interp))))
+
+    
+
     (define (while-func interp)
       (let*
           ((cond-block (stack-pop! interp))
            (body (stack-pop! interp)))
         (if (or (not (block-value? cond-block)) (not (block-value? body)))
             (interp-error! interp "TypeError" "the while func expects two block args")
-            (let loop ();このループを回す
+            (let loop ()                ;このループを回す
               (exec-block cond-block interp)
               (let ((now-cond (stack-pop! interp)))
                 (if (or (eq? the-nil now-cond) (eq? #f now-cond))
-                    '() ;終わり。何もしない
+                    '()                 ;終わり。何もしない
                     (begin
                       (exec-block body interp)
                       (loop))))))))
@@ -65,6 +80,7 @@
     (define control-func-dict
       `(("exec" . ,exec-func)
         ("if" . ,if-func)
+        ("if-exec" . ,if-exec-func)
         ("while" . ,while-func)
         ("repeat" . ,repeat-func))
       )))
