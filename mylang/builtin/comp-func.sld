@@ -10,57 +10,57 @@
           ((a (stack-pop! interp))
            (b (stack-pop! interp)))
         (stack-push! interp (eq? a b))))
-
+    
     (define (eq-func interp)
       (let*
           ((a (stack-pop! interp))
            (b (stack-pop! interp)))
         (stack-push! interp
-          (cond
-           ((and (number? a) (number? b))
-            (equal? a b))
+                     (cond
+                      ((and (number? a) (number? b))
+                       (equal? a b))
            
-           ((and (string? a) (string? b))
-            (equal? a b))
+                      ((and (string? a) (string? b))
+                       (equal? a b))
            
-           ((and (eq? a #t) (eq? a #t))
-            #t)
+                      ((and (eq? a #t) (eq? b #t))
+                       #t)
 
-           ((and (not a) (not b))
-            #t)
+                      ((and (not a) (not b))
+                       #t)
            
-           ((and (nil-value? a) (nil-value? b))
-            #t)
+                      ((and (nil-value? a) (nil-value? b))
+                       #t)
 
-           ((and (symbol-value? a) (symbol-value? b))
-            (equal? (symbol-value-token a) (symbol-value-token b)))
-           ;;わざわざtoken取らなくてもいいのかな
+                      ((and (symbol-value? a) (symbol-value? b))
+                       (equal? (symbol-value-token a) (symbol-value-token b)))
+                      ;;わざわざtoken取らなくてもいいのかな
 
-           ((and (lazy-value? a) (lazy-value? b))
-            (equal? (lazy-value-token a ) (lazy-value-token b)))
+                      ((and (lazy-value? a) (lazy-value? b))
+                       (equal? (lazy-value-token a ) (lazy-value-token b)))
 
-           ((and (block-value? a) (block-value? b))
-            (equal? (block-value-items a) (block-value-items b)));これでいいの？<=よくないです。作られた行が違うと偽になる。のちに改善
+                      ((and (block-value? a) (block-value? b))
+                       (equal? (block-value-items a) (block-value-items b))) ;これでいいの？<=よくないです。作られた行が違うと偽になる。のちに改善
            
-           ((and (builtin-func? a) (builtin-func? b))
-            (equal? a b))
+                      ((and (builtin-func? a) (builtin-func? b))
+                       (equal? a b))
 
-           ((and (lambda-value? a) (lambda-value? b))
-            (equal? a b))
+                      ((and (lambda-value? a) (lambda-value? b))
+                       (equal? a b))
 
-           ((and (trigger? a) (trigger? b))
-            #t)
+                      ((and (trigger? a) (trigger? b))
+                       #t)
 
-           ((and (semicolon? a) (semicolon? b))
-            #t)
+                      ((and (semicolon? a) (semicolon? b))
+                       #t)
            
-           ((and (r-paren? a) (l-paren? b))
-            #t)
+                      ((and (r-paren? a) (r-paren? b))
+                       #t)
            
-           ((and (l-paren? a) (l-paren? b))
-            #t)
+                      ((and (l-paren? a) (l-paren? b))
+                       #t)
 
-           (else #f)))))
+                      (else #f)))))
     (define (lt-func interp)
       (let* ((num-1 (stack-pop! interp))
              (num-2 (stack-pop! interp)))

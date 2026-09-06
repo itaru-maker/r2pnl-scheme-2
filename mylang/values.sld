@@ -55,21 +55,31 @@
       (env lambda-value-env)
       (line lambda-value-line))
 
+
+    (define (block-value->string block)
+      (if (null? (block-value-items block))
+          "()"
+          (let ((string-list
+                 (map (lambda (x) (value->write-string (car x)))
+                      (block-value-items block))))
+            (let loop
+                ((rest (cdr string-list))
+                 (acc (string-append "(" (car string-list))))
+              (if (null? rest)
+                  (string-append acc ")")
+                  (loop (cdr rest) (string-append acc " " (car rest))))))))
+
+    
     (define (value->write-string value)
       (cond ((number? value) (number->string value))
 	    ((string? value) (string-append "\"" value "\""))
 	    ((boolean? value) (if value "#true" "#false"))
 	    ((nil-value? value) "#nil")
-	    ;;((label-value? value) (string-append ":" (label-value-token value)))
 	    ((symbol-value? value) (symbol-value-token value))
 	    ((lazy-value? value) (string-append "'" (lazy-value-token value)))
-	    ((block-value? value)
-	     (string-append "("
-			    (apply string-append (map (lambda (pair) (string-append (value->write-string (car pair)) " ")) (block-value-items value)))
-			    "\b)"))
+	    ((block-value? value)(block-value->string value))
 	    ((builtin-func? value)
 	     (string-append "<builtin:" (builtin-func-name value) ">"))
-	    
 	     ((lambda-value? value)
 	      (string-append "<lambda" (if (lambda-value-line value) (string-append " at " (number->string (lambda-value-line value)))) ">"))
 	    ;;tokens
@@ -86,16 +96,11 @@
 	    ((string? value) value)
 	    ((boolean? value) (if value "#true" "#false"))
 	    ((nil-value? value) "#nil")
-	    ;;((label-value? value) (string-append ":" (label-value-token value)))
 	    ((symbol-value? value) (symbol-value-token value))
 	    ((lazy-value? value) (string-append "'" (lazy-value-token value)))
-	    ((block-value? value)
-	     (string-append "("
-			    (apply string-append (map (lambda (pair) (string-append (value->write-string (car pair)) " ")) (block-value-items value)))
-			    "\b)"));ちょっとやり方汚いから、後々修正(あと空リストが")"だけになる)
+            ((block-value? value)(block-value->string value))
 	    ((builtin-func? value)
 	     (string-append "<builtin:" (builtin-func-name value) ">"))
-	    
 	     ((lambda-value? value)
 	      (string-append "<lambda" (if (lambda-value-line value) (string-append " at " (number->string (lambda-value-line value)))) ">"))
 	    ;;tokens
