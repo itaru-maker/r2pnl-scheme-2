@@ -4,6 +4,7 @@
   (import (scheme base)
           (scheme write)
           (mylang values)
+          (mylang parser)
           (mylang interpreter))
   (begin
     (define (head-func interp)
@@ -57,14 +58,31 @@
              interp
              "TypeError" "The second arg of the \"cons\" func must be a block"))))
 
+    (define (reduce-func interp)
+      (let* ((block (stack-pop! interp)))
+        (if (not (block-value? block))
+            (interp-error! interp "TypeErorr" "the reduce func expects 1 block-value")
+            (let ((sentences (tokens->sentences (block-value-items block))))
+              (let loop ((rest sentences) (acc '()))
+                (if (null? rest)
+                    (stack-push! interp (make-block-value (reverse acc)))
+                    (let ((before-stack (length (interp-stack interp))))
+                      (execute-sentence interp (car rest))
+                      (if (not (= (length (interp-stack interp)) (+ before-stack 1)))
+                          (interp-error! interp
+                                         "TypeError"
+                                         "each sentence in a reduce func block must leave exactly one value on ")
+                          (loop (cdr rest) (cons (cons (stack-pop! interp) (interp-token-line interp)) acc))))))))))
 
 
-     (define block-func-dict
+
+    (define block-func-dict
       `(("head" . ,head-func)
         ("tail" . ,tail-func)
         ("pack" . ,pack-func)
         ("null-block?" . ,null-block?-func)
-        ("cons" . ,cons-func)))))
+        ("cons" . ,cons-func)
+        ("reduce" . ,reduce-func)))))
 
 
 

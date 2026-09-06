@@ -11,8 +11,18 @@
 );
 
 
-|write |fib 20;
+|write |fib 10;
 !27までにしといてください(終わりません)
+
+|write
+   |reduce
+      (
+      |add 3 4;
+      "takoyaki";
+      |map (|+ 3;) (-2 -1 0 1 2);
+      )
+;
+
 
 
 
