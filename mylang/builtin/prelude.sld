@@ -12,7 +12,8 @@
           (mylang builtin block-func)
           (mylang builtin value-func)
           (mylang builtin higher-order-func)
-          (mylang builtin string-func))
+          (mylang builtin string-func)
+          (mylang builtin logic-func))
 
   (begin
     (define all-builtins
@@ -27,4 +28,5 @@
        block-func-dict
        value-func-dict
        higher-order-func-dict
-       string-func-dict))))
+       string-func-dict
+       logic-func-dict))))

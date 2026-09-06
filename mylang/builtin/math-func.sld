@@ -34,8 +34,25 @@
               (interp-error! interp "ZeroDivError" "division of zero")
 	      (stack-push! interp (/ a b)))
 	  (interp-error! interp "TypeError" "func \"div\" expects two numbers args"))))
+
+  (define (mod-func interp)
+    (let* ((a (stack-pop! interp))
+	   (b (stack-pop! interp)))
+      (if (and (number? a) (number? b))
+          (if (zero? b)
+              (interp-error! interp "ZeroDivError" "modulo of zero")
+	      (stack-push! interp (modulo a b)))
+	  (interp-error! interp "TypeError" "func \"mod\" expects two numbers args"))))
+
+  (define (expt-func interp)
+    (let* ((a (stack-pop! interp))
+	   (b (stack-pop! interp)))
+      (if (and (number? a) (number? b))
+	  (stack-push! interp (expt a b))
+	  (interp-error! interp "TypeError" (string-append "func \"expt\" expects two numbers args but," (value->write-string a)"and" (value->write-string b))))))
+
   
-  ;;mod floor-div ** はあとで
+  ;;floor-divはあとで
 
   (define (int-func interp)
     (let ((a (stack-pop! interp)))
@@ -49,9 +66,13 @@
       ("sub" . ,sub-func)
       ("mul" . ,mul-func)
       ("div" . ,div-func)
+      ("mod" . ,mod-func)
+      ("expt" . ,expt-func)
       ("+" . ,add-func)
       ("-" . ,sub-func)
       ("*" . ,mul-func)
       ("/" . ,div-func)
+      ("%" . ,mod-func)
+      ("**" . ,expt-func)
       ("int" . ,int-func)))))
   

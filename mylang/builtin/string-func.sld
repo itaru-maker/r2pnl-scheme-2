@@ -5,18 +5,33 @@
           (mylang interpreter))
 
   (begin
-    (define (concat-func interp)
+    (define (string-concat-func interp)
       (let* ((a (stack-pop! interp)) (b (stack-pop! interp)))
         (if (not (and (string? a) (string? b)))
-            (interp-error! interp "TypeError" "The \"concat\" func expects two string")
+            (interp-error! interp "TypeError" "The \"string-concat\" func expects two string")
             (stack-push! interp (string-append a b)))))
 
     (define (string-len-func interp)
       (let* ((a (stack-pop! interp)))
         (if (string? a)
             (stack-push! interp (string-length a))
-            (interp-error! intero "TypeError" "The \"string-len func\" expects one string"))))
+            (interp-error! interp "TypeError" "The \"string-len func\" expects one string"))))
+
+    (define (string-nth-func interp)
+      (let* ((str (stack-pop! interp))
+             (i (stack-pop! interp)))
+        (if (or
+             (not (and (string? str) (number? i)))
+             (not (integer? i))
+             (< i 0))
+            (interp-error! interp "TypeError" "The string-nth func expects one string and one positive integer")
+            (begin
+              (if (<= (string-length str) i)
+                  (interp-error! interp "IndexError" "string index out of range")
+                  (stack-push! interp (string (string-ref str (exact i)))))))))
+
 
     (define string-func-dict
-      `(("concat" . ,concat-func)
-        ("string-len" . ,string-len-func)))))
+      `(("string-concat" . ,string-concat-func)
+        ("string-len" . ,string-len-func)
+        ("string-nth" . ,string-nth-func)))))

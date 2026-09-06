@@ -50,11 +50,11 @@
       (stack-push! interp (eq? the-l-paren (stack-pop! interp))))
 
     (define value-func-dict
-      `(("num?" . ,number?-func)
-        ("str?" . ,string?-func)
+      `(("number?" . ,number?-func)
+        ("string?" . ,string?-func)
         ("true?" . ,true?-func)
         ("false?" . ,false?-func)
-        ("nil?" . ,nil?-func)
+        ("ninl?" . ,nil?-func)
         ("symbol?" .,symbol?-func)
         ("lazy?" . ,lazy?-func)
         ("block?" . ,block?-func)

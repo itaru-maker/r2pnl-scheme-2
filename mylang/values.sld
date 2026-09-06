@@ -71,7 +71,7 @@
 	     (string-append "<builtin:" (builtin-func-name value) ">"))
 	    
 	     ((lambda-value? value)
-	      (string-append "<lambda" (if (lambda-value-line value) (string-append "at" (number->string (lambda-value-line value)))) ">"))
+	      (string-append "<lambda" (if (lambda-value-line value) (string-append " at " (number->string (lambda-value-line value)))) ">"))
 	    ;;tokens
 	    ((trigger? value) "<trigger>")
 	    ((semicolon? value) "<semicolon>")
@@ -92,12 +92,12 @@
 	    ((block-value? value)
 	     (string-append "("
 			    (apply string-append (map (lambda (pair) (string-append (value->write-string (car pair)) " ")) (block-value-items value)))
-			    "\b)"));ちょっとやり方汚いから、後々修正(あと空リストが)だけになる)
+			    "\b)"));ちょっとやり方汚いから、後々修正(あと空リストが")"だけになる)
 	    ((builtin-func? value)
 	     (string-append "<builtin:" (builtin-func-name value) ">"))
 	    
 	     ((lambda-value? value)
-	      (string-append "<lambda" (if (lambda-value-line value) (string-append "at" (number->string (lambda-value-line value)))) ">"))
+	      (string-append "<lambda" (if (lambda-value-line value) (string-append " at " (number->string (lambda-value-line value)))) ">"))
 	    ;;tokens
 	    ((trigger? value) "<trigger>")
 	    ((semicolon? value) "<semicolon>")
@@ -105,5 +105,6 @@
 	    ((l-paren? value) "<l-paren>")
 	
   	    (else (write "debug:unknown-type") (write  value))))))
+
 
    
