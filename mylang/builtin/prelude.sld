@@ -11,7 +11,8 @@
           (mylang builtin comp-func)
           (mylang builtin block-func)
           (mylang builtin value-func)
-          (mylang builtin higher-order-func))
+          (mylang builtin higher-order-func)
+          (mylang builtin string-func))
 
   (begin
     (define all-builtins
@@ -25,4 +26,5 @@
        comp-func-dict
        block-func-dict
        value-func-dict
-       higher-order-func-dict))))
+       higher-order-func-dict
+       string-func-dict))))

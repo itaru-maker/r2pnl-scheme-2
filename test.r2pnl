@@ -10,9 +10,9 @@
     );     
 );
 
-
 |write |fib 10;
 !27までにしといてください(終わりません)
+|newline;
 
 |write
    |reduce
@@ -22,6 +22,16 @@
       |map (|+ 3;) (-2 -1 0 1 2);
       )
 ;
+|newline;
+
+
+|write |concat "hello " "world";
+|newline;
+
+|write |string-len "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん";!50音表は46文字！
+
+
+
 
 
 
