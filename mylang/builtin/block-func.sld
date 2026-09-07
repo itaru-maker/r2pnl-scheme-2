@@ -74,6 +74,31 @@
                                          "each sentence in a reduce func block must leave exactly one value on ")
                           (loop (cdr rest) (cons (cons (stack-pop! interp) (interp-token-line interp)) acc))))))))))
 
+    (define (block-concat-func interp)
+      (let* ((block1 (stack-pop! interp))
+             (block2 (stack-pop! interp)))
+        (if (not (and (block-value? block1) (block-value? block2)))
+            (interp-error! interp "TypeError" "the block-concat func expects two block-value")
+            (stack-push! interp (make-block-value (append (block-value-items block1) (block-value-items block2)))))))
+
+    (define (block-length-func interp)
+      (let* ((block (stack-pop! interp)))
+        (if (block-value? block)
+            (stack-push! interp (length (block-value-items block)))
+            (interp-error! interp "TypeError" "the block-length func expects one block-value"))))
+
+    (define (block-nth-func interp)
+      (let* ((block (stack-pop! interp))
+             (i (stack-pop! interp)))
+        (if (or
+             (not (and (block-value? block) (number? i)))
+             (not (integer? i))
+             (< i 0))
+            (interp-error! interp "TypeError" "The block-nth func expects one block-value and one positive integer")
+            (begin
+              (if (<= (length (block-value-items block)) i)
+                  (interp-error! interp "IndexError" "block index out of range")
+                  (stack-push! interp (car (list-ref (block-value-items block) (exact i)))))))))
 
 
     (define block-func-dict
@@ -82,7 +107,10 @@
         ("pack" . ,pack-func)
         ("null-block?" . ,null-block?-func)
         ("cons" . ,cons-func)
-        ("reduce" . ,reduce-func)))))
+        ("reduce" . ,reduce-func)
+        ("block-concat" . ,block-concat-func)
+        ("block-length" . , block-length-func)
+        ("block-nth" . ,block-nth-func)))))
 
 
 

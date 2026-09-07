@@ -36,7 +36,10 @@ cyclone
 (define r2pnl-code
   (call-with-input-file "test.r2pnl"
     (lambda (port)
-      (string-copy (read-string 10000 port)))));よくわからないけどguileの内部構造的にコピーを作らないといけないらしい（他の処理系では動く）
+      (let  ((content (read-string 10000 port)))
+        (if (eof-object? content)
+            ""
+            (string-copy content))))))
 
 (interp-run mylang r2pnl-code);実行する
 (newline)
